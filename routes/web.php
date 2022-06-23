@@ -13,14 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Post'], function(){
+    Route::get('/', 'IndexController')->name('posts.index');
 });
 
-Route::get('my_page', 'MyFirstController@firstController');
 
-Route::get('my_second_page', 'MyFirstController@secondController');
 
-Route::get('my_third_page', 'MySecondController@thirdController');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+    Route::group(['namespace' => 'Post'], function(){
+        Route::get('/post', 'IndexController')->name('admin.post.index');
+        Route::get('/post/create', 'CreateController')->name('admin.post.create');
+        Route::post('/post', 'StoreController')->name('admin.post.store');
+        Route::get('/post/{post}', 'ShowController')->name('admin.post.show');
+        Route::get('/post/{post}/edit', 'EditController')->name('admin.post.edit');
+        Route::patch('/post/{post}', 'UpdateController')->name('admin.post.update');
+        Route::delete('/post/{post}', 'DestroyController')->name('admin.post.delete');
+    });
+});
 
-Route::get('my_new_page', 'MyThirdController@newPage');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+    Route::group(['namespace' => 'Archive'], function(){
+        Route::get('/archive', 'IndexController')->name('admin.archive.index');
+    });
+});
+
+
