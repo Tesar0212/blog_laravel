@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Admin\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\PostFilter;
+use App\Http\Requests\Post\FilterRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class IndexController extends BaseController
 {
 
-    public function __invoke()
+    public function __invoke(FilterRequest $request)
     {
-        $posts = Post::all();
-        $archive = Post::withTrashed()->whereNotNull('deleted_at')->get();
-        return view('admin.post.index', compact('posts', 'archive'));
-        dd($posts);
+        $data = $request->validated();
+        $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
+        $posts = Post::filter($filter)->paginate(10);
+        $archive = Post::onlyTrashed()->get();
+        $categories = Category::all();
+
+        return view('admin.post.index', compact('posts', 'archive', 'categories'));
     }
 
 }

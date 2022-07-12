@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin\Post;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class CreateController extends Controller
+class CreateController extends BaseController
 {
 
     public function __invoke()
     {
         $posts = Post::all();
-        $archive = Post::withTrashed()->whereNotNull('deleted_at')->get();
-        return view('admin.post.create', compact('posts', 'archive'));
+        $archive = Post::onlyTrashed()->get();
+        $categories = Category::all();
+        return view('admin.post.create', compact('posts', 'archive', 'categories'));
     }
 
 }

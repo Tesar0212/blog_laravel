@@ -6,12 +6,12 @@
     </div>
     <div class="mb-3 d-flex justify-content-center ">
         <h1>
-            {{$post->title}}
+            {{$archive->title}}
         </h1>
     </div>
     <div class="mb-3">
         <p>
-            {{$post->content}}
+            {{$archive->content}}
         </p>
     </div>
 {{--    <div class="mb-3 d-flex justify-content-center">--}}
@@ -19,7 +19,7 @@
 {{--    </div>--}}
     <div class="d-flex justify-content-start">
 {{--        <a class="btn btn-success" role="button" aria-disabled="true" href="{{route('admin.archive.edit', $archive->id)}}">Редактировать пост</a>--}}
-        <form action="{{route('admin.post.delete', $post->id)}}" method="post" >
+        <form action="{{route('admin.post.delete', $post->id)w}" method="post" >
             @csrf
             @method('delete')
             <input type="submit" value="Архивировать пост" class="btn btn-danger">

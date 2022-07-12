@@ -15,15 +15,23 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('title');
+            $table->text('description');
             $table->text('content');
             $table->unsignedBigInteger('like')->default(0);
             $table->boolean('is-published')->default(1);
             $table->string('img');
-            $table->timestamps();
 
+            $table->timestamps();
             $table->softDeletes();
+
+
+
+
+
         });
+
     }
 
     /**

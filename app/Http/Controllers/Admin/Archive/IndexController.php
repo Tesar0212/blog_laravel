@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function __invoke()
     {
         $posts = Post::all();
-        $archive = Post::withTrashed()->whereNotNull('deleted_at')->get();
+        $archive = Post::onlyTrashed()->get();
         return view('admin.archive.index', compact('archive', 'posts'));
     }
 

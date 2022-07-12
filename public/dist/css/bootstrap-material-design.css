@@ -2600,7 +2600,7 @@ input[type="button"].btn-block {
   align-items: flex-start;
   -ms-flex-pack: center;
   justify-content: center; }
-  
+
   .btn-group-vertical > .btn,
   .btn-group-vertical > .custom-file-control::before,
   .btn-group-vertical > .btn-group {

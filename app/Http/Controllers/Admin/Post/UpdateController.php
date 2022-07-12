@@ -3,21 +3,19 @@
 namespace App\Http\Controllers\Admin\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Post\UpdateRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class UpdateController extends Controller
+class UpdateController extends BaseController
 {
 
-    public function __invoke(Post $post)
+    public function __invoke(Post $post, UpdateRequest $request)
     {
-        $data = request()->validate([
-            'title' => 'string',
-            'content' => 'string',
-            'img' => 'string',
+        $data = $request->validated();
 
-        ]);
-        $post->update($data);
+        $this->service->update($post, $data);
+
         return redirect()->route('admin.post.show', $post->id);
     }
 

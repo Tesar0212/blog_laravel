@@ -14,12 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['namespace' => 'Post'], function(){
-    Route::get('/', 'IndexController')->name('posts.index');
+    Route::get('/', 'IndexController')->name('index');
 });
 
+//
+//Route::get('/login', 'HomeController@index')->name('home');
 
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function(){
+    Route::group(['namespace' => 'Archive'], function(){
+        Route::get('/archive', 'IndexController')->name('admin.archive.index');
+        Route::get('/archive/{post}/restore', 'RestoreController')->name('admin.archive.restore');
+    });
     Route::group(['namespace' => 'Post'], function(){
         Route::get('/post', 'IndexController')->name('admin.post.index');
         Route::get('/post/create', 'CreateController')->name('admin.post.create');
@@ -31,10 +38,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
     });
 });
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
-    Route::group(['namespace' => 'Archive'], function(){
-        Route::get('/archive', 'IndexController')->name('admin.archive.index');
-    });
-});
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

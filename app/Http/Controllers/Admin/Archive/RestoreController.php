@@ -9,11 +9,10 @@ use Illuminate\Http\Request;
 class RestoreController extends Controller
 {
 
-    public function __invoke()
+    public function __invoke($id)
     {
-        $posts = Post::all();
-        $archive = Post::withTrashed()->whereNotNull('deleted_at')->get();
-        return view('admin.archive.index', compact('archive', 'posts'));
+        Post::withTrashed()->find($id)->restore();
+        return redirect()->route('admin.archive.index');
     }
 
 }

@@ -9,7 +9,12 @@
             {{$post->title}}
         </h1>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-center text-center">
+        <h3>
+            {{$post->description}}
+        </h3>
+    </div>
+    <div class="mb-3 w-100">
         <p>
             {{$post->content}}
         </p>
